@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fbf7ff" />
+    <meta
+      name="description"
+      content="MediMây giúp bạn quản lý giờ uống thuốc và theo dõi những ngày đã uống."
+    />
+    <title>MediMây — Chăm mình một chút</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="MediMây - Trang chủ">
+          <span class="brand-mark" aria-hidden="true">✿</span>
+          <span>MediMây</span>
+        </a>
+        <span class="topbar-note"><span aria-hidden="true">♡</span> chăm mình một chút</span>
+      </header>
+
+      <section class="welcome" aria-labelledby="welcome-title">
+        <div class="welcome-copy">
+          <p class="eyebrow">GÓC NHỎ CỦA BẠN</p>
+          <h1 id="welcome-title">Chào bạn, hôm nay mình thế nào? <span aria-hidden="true">🌷</span></h1>
+          <p class="welcome-subtitle">Nhớ uống thuốc đúng giờ nhé. Bạn xứng đáng được chăm sóc thật tốt.</p>
+        </div>
+        <div class="welcome-art" aria-hidden="true">
+          <span class="art-sparkle sparkle-one">✦</span>
+          <span class="art-heart">♡</span>
+          <span class="art-sparkle sparkle-two">✧</span>
+          <span class="art-flower">🌼</span>
+        </div>
+      </section>
+
+      <section class="date-section" aria-labelledby="date-heading">
+        <div class="section-heading date-heading">
+          <div>
+            <p class="eyebrow">NHỊP ĐIỆU CỦA BẠN</p>
+            <h2 id="date-heading">Hôm nay</h2>
+          </div>
+          <button class="today-button" id="today-button" type="button">Về hôm nay</button>
+        </div>
+        <div class="week-picker">
+          <button class="week-nav" id="previous-week" type="button" aria-label="Tuần trước">‹</button>
+          <div class="week-strip" id="week-strip" aria-label="Chọn ngày"></div>
+          <button class="week-nav" id="next-week" type="button" aria-label="Tuần sau">›</button>
+        </div>
+      </section>
+
+      <section class="progress-card" aria-labelledby="progress-title">
+        <div class="progress-copy">
+          <div class="progress-title-row">
+            <span class="progress-icon" aria-hidden="true">♡</span>
+            <h2 id="progress-title">Một chút yêu thương</h2>
+          </div>
+          <p id="progress-message">Thêm lịch uống thuốc để bắt đầu nhé.</p>
+          <div
+            class="progress-track"
+            id="progress-track"
+            role="progressbar"
+            aria-label="Tiến độ uống thuốc hôm nay"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span id="progress-fill"></span>
+          </div>
+        </div>
+        <div class="progress-count" aria-live="polite">
+          <strong id="taken-count">0</strong>
+          <span id="total-count">/ 0</span>
+          <small>đã uống</small>
+        </div>
+        <span class="progress-decoration" aria-hidden="true">✿</span>
+      </section>
+
+      <section class="schedule-section" aria-labelledby="schedule-title">
+        <div class="section-heading schedule-heading">
+          <div>
+            <p class="eyebrow">TỪNG BƯỚC THẬT NHẸ</p>
+            <h2 id="schedule-title">Lịch uống thuốc <span class="heading-flower" aria-hidden="true">✿</span></h2>
+          </div>
+          <button class="add-button" id="open-dialog" type="button">
+            <span aria-hidden="true">＋</span>
+            <span>Thêm thuốc</span>
+          </button>
+        </div>
+
+        <div class="storage-warning" id="storage-warning" role="alert" hidden>
+          <p id="storage-warning-text"></p>
+          <button id="reset-storage" type="button">Khởi tạo lại dữ liệu</button>
+        </div>
+
+        <div class="reminder-list" id="reminder-list" aria-live="polite"></div>
+      </section>
+
+      <footer class="footer-note">
+        <span aria-hidden="true">☁</span>
+        Dữ liệu của bạn được lưu riêng trên thiết bị này.
+      </footer>
+    </main>
+
+    <dialog class="medicine-dialog" id="medicine-dialog" aria-labelledby="dialog-title">
+      <form class="medicine-form" id="medicine-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">THÊM VÀO LỊCH CỦA BẠN</p>
+            <h2 id="dialog-title">Thuốc mới <span aria-hidden="true">🌸</span></h2>
+          </div>
+          <button class="icon-button close-dialog" type="button" aria-label="Đóng">×</button>
+        </div>
+
+        <label class="field-label" for="medicine-name">Tên thuốc</label>
+        <input
+          id="medicine-name"
+          name="name"
+          type="text"
+          maxlength="80"
+          placeholder="Ví dụ: Vitamin C"
+          autocomplete="off"
+          required
+        />
+
+        <label class="field-label" for="medicine-dose">Liều lượng <span>(không bắt buộc)</span></label>
+        <input
+          id="medicine-dose"
+          name="dose"
+          type="text"
+          maxlength="50"
+          placeholder="Ví dụ: 1 viên sau bữa ăn"
+          autocomplete="off"
+        />
+
+        <label class="field-label" for="medicine-time">Giờ uống</label>
+        <input id="medicine-time" name="time" type="time" required />
+
+        <label class="field-label" for="medicine-note">Ghi chú <span>(không bắt buộc)</span></label>
+        <textarea
+          id="medicine-note"
+          name="note"
+          rows="2"
+          maxlength="160"
+          placeholder="Thêm điều bạn muốn nhớ..."
+        ></textarea>
+
+        <p class="dialog-hint"><span aria-hidden="true">☁</span> Lịch này lặp lại mỗi ngày trên thiết bị của bạn.</p>
+        <div class="dialog-actions">
+          <button class="cancel-button" type="button">Để sau</button>
+          <button class="submit-button" type="submit">Lưu lịch uống <span aria-hidden="true">♡</span></button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
